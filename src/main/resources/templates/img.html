@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Hugo 0.118.2">
+<title _msttexthash="2843828" _msthash="0">Event image Gallery</title>
+
+<link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/album/">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+
+/>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+<link href="/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+<!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/5.3/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+
+<link rel="manifest" href="/docs/5.3/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/5.3/assets/img/favicons/safari-pinned-tab.svg" color="#712cf9">
+<link rel="icon" href="/docs/5.3/assets/img/favicons/favicon.ico">
+<meta name="theme-color" content="#712cf9">
+
+
+<header data-bs-theme="dark">
+
+    <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container">
+            <a href="#" class="navbar-brand d-flex align-items-center">
+                <strong _msttexthash="799864" _msthash="12">Цифровая галерея</strong>
+            </a>
+            <nav class="nav nav-masthead justify-content-center float-md-end">
+                <a class="nav-link fw-bold py-1 px-100" href="/home" _msttexthash="984971" _msthash="7">Главная </a>
+                <div th:if="${!isAuthenticated}">
+                    <a  class="nav-link fw-bold py-1 px-100" href="/registration" _msttexthash="983437" _msthash="9">Регистрация</a>
+                </div>
+                <a class="nav-link fw-bold py-1 px-100" href="/event" _msttexthash="983437" _msthash="9"> Мероприятия </a>
+                <a class="nav-link fw-bold py-1 px-100" href="/hall" _msttexthash="983437" _msthash="9"> Холл </a>
+                <div class="nav nav-masthead justify-content-center float-md-end" th:if="${isAuthenticated}">
+                    <div th:if="${#authorization.expression('hasRole(''ROLE_AUTHOR'')')}">
+                        <a  class="nav-link fw-bold py-1 px-100" href="/author_panel" _msttexthash="983437" _msthash="9">Страница автора</a>
+                    </div>
+
+                    <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+                        <a class="nav-link fw-bold py-1 px-100" href="/admin_panel_test" _msttexthash="983437" _msthash="9">Админпанель</a>
+                    </div>
+
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+<main>
+<div class="container-fluid">
+    <div class="px-lg-5">
+
+        <!--<div class="row py-5">
+            <div class="col-lg-12 mx-auto">
+                <div class="text-white p-5 shadow-sm rounded banner">
+                    <h1 class="display-4">Bootstrap 4 photo gallery</h1>
+                    <p class="lead">Bootstrap photogallery snippet.</p>
+                    <p class="lead">Snippet by <a class="text-reset">
+                        Bootstrapious</a>, Images by <a class="text-reset">Unsplash</a>.
+                    </p>
+                </div>
+            </div>
+        </div>-->
+        <!-- End -->
+
+        <div class="row" th:each="image: ${images}">
+            <!-- Gallery item -->
+            <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                <div class="bg-white rounded shadow-sm">
+                    <img th:src="@{'/image/'+${image.id}}" class="img-fluid card-img-top">
+                    <div class="p-4">
+                        <h5> <a href="#" class="text-dark" th:text="${image.name}"></a></h5>
+                        <p class="small text-muted mb-0" th:text="${image.description}"></p>
+                        <div class="d-flex align-items-center justify-content-between rounded-pill bg-light px-3 py-2 mt-4">
+                            <p class="small mb-0"><i class="fa fa-picture-o mr-2"></i><span class="font-weight-bold">JPG</span></p>
+                            <div class="badge badge-danger px-3 rounded-pill font-weight-normal">New</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </div>
+        <div class="py-5 text-right"><a href="#" class="btn btn-dark px-5 py-3 text-uppercase">Show me more</a></div>
+    </div>
+</div>
+</main>
+</html>

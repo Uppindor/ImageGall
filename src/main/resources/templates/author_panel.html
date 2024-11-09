@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html lang="en"
+xmlns:th="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+<body>
+<div class="container mt-5">
+    <div class="row justify-content-md-center">
+        <div class="col-8">
+            <div class="FormLeft">
+                <h2 class="text-center mb-4">Добавить иллюстрацию</h2>
+                <form id="form" method="post" action="author_panel_image" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Введите имя" required="required">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Описание</label>
+                        <textarea class="form-control" id="description" name="description" rows="3" placeholder="Введите описание" required="required"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="image">Изображение</label>
+                        <input type="file" class="form-control-file" id="image" name="image" required>
+                    </div>
+                    <button type="submit" id="submit" class="btn btn-primary btn-block">Отправить</button>
+                    <input type="hidden" name="_csrf" th:value="${_csrf.token}">
+                </form>
+            </div>
+            <div class="FormLeft">
+                <h2 class="text-center mb-4">Удалить иллюстрацию</h2>
+                <div class="card mb-3" th:each="image: ${images}">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${image.name}">...</h5>
+                        <p class="card-text" th:text="${image.description}">/...</p>
+                        <!--<a href="#" class="btn btn-primary">Узнать больше</a>-->
+                        <a th:href="@{'/author_panel/delete/' + ${image.id}}" >Удалить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="col-4">
+            <form>
+                <div class="row">
+                    <div class=" contact-form">
+                        <div class="">
+                            <h2 class="mb-3 font-weight-light">Панель автора</h2>
+                            <form class="mt-3">
+                                <div class="col-lg-12 ">
+                                    <div class="form-group">
+                                        <button class="btn btn-outline-secondary buttons btn-block btn-insert-delete" type="button">Добавить иллюстрацию</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 ">
+                                    <div class="form-group">
+                                        <button class="btn btn-outline-secondary buttons btn-block btn-insert-delete" type="button">Удалить иллюстрацию</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <form>
+                                            <button class="btn btn-outline-secondary buttons btn-block" formaction="/home">Главная страница</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div th:if="${isAuthenticated}">
+                                            <form th:action="@{/logout}" method="post">
+                                                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                                                <button class="btn btn-outline-secondary buttons btn-block" type="submit">Выйти</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    let left = document.querySelectorAll('.FormLeft');
+let buttonright = document.querySelectorAll('.btn-insert-delete');
+
+left.forEach(element => {
+element.style.display = 'none';
+});
+console.log("andre huilo");
+console.log(left.length);
+console.log(buttonright.length);
+
+for (let i = 0; i < buttonright.length; i++) {
+buttonright[i].addEventListener('click', () => {
+    for (let j = 0; j < left.length; j++) {
+        if (j === i) {
+            left[j].style.display = 'block';
+            buttonright[j].classList.add('active');
+        } else {
+            left[j].style.display = 'none';
+            buttonright[j].classList.remove('active');
+        }
+    }
+});
+}
+</script>
+</body>
+</html>

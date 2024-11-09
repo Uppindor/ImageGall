@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html
+        xmlns:th="http://www.thymeleaf.org">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"
+
+      />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+
+/>
+
+<style>
+    @import url(//fonts.googleapis.com/css?family=Montserrat:300,400,500);
+    .bform {
+     font-family: "Montserrat", sans-serif;
+     color: #8d97ad;
+     font-weight: 300;
+     overflow: hidden;
+     position: relative;
+    }
+
+    .bform h1,
+    .bform h2,
+    .bform h3,
+    .bform h4,
+    .bform h5,
+    .bform h6 {
+     color: #3e4555;
+    }
+
+    .bform .subtitle {
+     color: #8d97ad;
+     line-height: 24px;
+    }
+
+    .bform a {
+     text-decoration: none;
+    }
+
+    .bform .btn-danger-gradiant {
+     background: #ff4d7e;
+     background: -webkit-linear-gradient(legacy-direction(to right), #ff4d7e 0%, #ff6a5b 100%);
+     background: -webkit-gradient(linear, left top, right top, from(#ff4d7e), to(#ff6a5b));
+     background: -webkit-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+     background: -o-linear-gradient(left, #ff4d7e 0%, #ff6a5b 100%);
+     background: linear-gradient(to right, #ff4d7e 0%, #ff6a5b 100%);
+    }
+
+    .bform .btn-danger-gradiant:hover {
+     background: #ff6a5b;
+     background: -webkit-linear-gradient(legacy-direction(to right), #ff6a5b 0%, #ff4d7e 100%);
+     background: -webkit-gradient(linear, left top, right top, from(#ff6a5b), to(#ff4d7e));
+     background: -webkit-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+     background: -o-linear-gradient(left, #ff6a5b 0%, #ff4d7e 100%);
+     background: linear-gradient(to right, #ff6a5b 0%, #ff4d7e 100%);
+    }
+
+    .bform .btn-md {
+     padding: 15px 45px;
+     font-size: 16px;
+    }
+
+    .bform .text-danger {
+     color: #ff4d7e !important;
+    }
+
+
+    @media (max-width: 1023px) {
+     .bform .contact-form {
+     padding-left: 0;
+     padding-right: 0;
+     }
+    }
+
+    @media (max-width: 767px) {
+     .bform .contact-form {
+     padding-left: 10px;
+     padding-right: 10px;
+     }
+    }
+
+    @media (max-width: 1023px) {
+     .bform .right-image {
+     position: relative;
+     bottom: -95px;
+     }
+    }
+    .container {
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    }
+    .form-control-class {
+    box-sizing: border-box;
+    padding: 20px;
+    }
+</style>
+
+<div class="bform py-5">
+    <!-- success message -->
+    <div th:if="${param.success}">
+        <div class="alert alert-info">You've successfully registered
+            to our awesome app!</div>
+    </div>
+
+    <div th:if="${param.email_invalid}">
+        <div class="alert alert-danger">
+            Email is Already Registered!</div>
+    </div>
+    <!-- Row -->
+    <form th:action="@{/registration}" method="post"
+          th:object="${user}">
+        <div class="row">
+            <div class="container">
+                <div class="col-lg-6 align-justify-center pr-4 pl-0 contact-form">
+                    <div class="">
+                        <h2 class="mb-3 font-weight-light">Регистрация</h2>
+                        <form method="post" class="mt-3">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group" for="name">
+                                        <input class="form-control" type="text" id="name" placeholder="Полное имя" name="name">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group" for="email">
+                                        <input class="form-control" type="email" id="email" placeholder="Электронная почта" name="email">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group"  for="password">
+                                        <input class="form-control" type="password" id="password" placeholder="Пароль" name="password">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <input class="form-control" type="password" placeholder="Повторите пароль">
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <label for="role">Выберите роль</label>
+                                        <select class="form-control" name="role" id="role" >
+                                            <option value="ROLE_AUTHOR">Автор</option>
+                                        </select>
+                                    <!--<th:block th:each="role: ${listRoles}">
+                                        <input type="checkbox" th:field="*{roles}"
+                                               th:text="${role.name}" th:value="${role.id}" class="m-2" />
+                                    </th:block>-->
+                                </div>
+                                <div class="col-lg-12">
+                                    <button type="submit" class="btn btn-md btn-block btn-danger-gradiant text-white border-0"><span> Создать Аккаунт</span></button>
+                                    <!-- -->
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+
+                            <div class="col-lg-12 text-center mt-4">
+                                У вас уже есть учетная запись? <a th:href="@{/login}" class="text-danger">Войти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 right-image pl-3" >
+            </div>
+        </div>
+    </form>
+</div>
+</html>
+<script>
+    // Проверяем статус авторизации через запрос к серверу
+    fetch('/auth/status')
+        .then(response => response.text())
+        .then(status => {
+            const authLink = document.getElementById('authLink');
+            if (status === 'authenticated') {
+                authLink.textContent = 'Выйти';
+                authLink.href = '/logout';
+                authLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    fetch('/logout', {
+                        method: 'POST',
+                        credentials: 'same-origin'
+                    }).then(() => {
+                        window.location.href = "/";
+                    });
+                });
+            }
+        });
+</script>
